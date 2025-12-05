@@ -8,3 +8,4 @@ deployment:
     - /bin/cp composer.json $DEPLOYPATH
     - /bin/cp composer.lock $DEPLOYPATH
     - /bin/cp spark $DEPLOYPATH
+    - /bin/cp index.php $DEPLOYPATH
