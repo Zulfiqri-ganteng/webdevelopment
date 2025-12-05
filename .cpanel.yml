@@ -3,21 +3,18 @@ deployment:
   tasks:
     - export DEPLOYPATH=/home/zulh7811/public_html/
 
-    # Bersihkan file index lama (opsional tapi aman)
-    - /bin/rm -f $DEPLOYPATH/index.php
-
-    # Copy semua asset yang dibutuhkan CI4 ke public_html
+    # Copy seluruh isi folder public ke public_html
     - /bin/cp -R public/* $DEPLOYPATH
 
-    # Copy folder inti CI4
+    # Copy app, writable, vendor ke public_html
     - /bin/cp -R app $DEPLOYPATH
     - /bin/cp -R writable $DEPLOYPATH
-    - /bin/cp spark $DEPLOYPATH
+    - /bin/cp -R vendor $DEPLOYPATH
+
+    # Copy file-file root project
     - /bin/cp composer.json $DEPLOYPATH
     - /bin/cp composer.lock $DEPLOYPATH
+    - /bin/cp spark $DEPLOYPATH
 
-    # Jika vendor disimpan dalam repo, aktifkan baris ini:
-    # - /bin/cp -R vendor $DEPLOYPATH
-
-    # Gunakan index khusus deployment
+    # Copy deploy index ke public_html
     - /bin/cp deploy_index.php $DEPLOYPATH/index.php
