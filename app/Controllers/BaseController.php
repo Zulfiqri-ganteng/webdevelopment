@@ -9,16 +9,6 @@ use CodeIgniter\HTTP\RequestInterface;
 use CodeIgniter\HTTP\ResponseInterface;
 use Psr\Log\LoggerInterface;
 
-/**
- * Class BaseController
- *
- * BaseController provides a convenient place for loading components
- * and performing functions that are needed by all your controllers.
- * Extend this class in any new controllers:
- *     class Home extends BaseController
- *
- * For security be sure to declare any new methods as protected or private.
- */
 abstract class BaseController extends Controller
 {
     /**
@@ -29,30 +19,29 @@ abstract class BaseController extends Controller
     protected $request;
 
     /**
-     * An array of helpers to be loaded automatically upon
-     * class instantiation. These helpers will be available
-     * to all other controllers that extend BaseController.
-     *
-     * @var list<string>
+     * Safe declared properties (WAJIB untuk PHP 8.2+)
+     */
+    protected string $baseUrl = '';
+
+    /**
+     * Helpers auto-load
      */
     protected $helpers = ['log', 'activity'];
 
-
     /**
-     * Be sure to declare properties for any property fetch you initialized.
-     * The creation of dynamic property is deprecated in PHP 8.2.
+     * Init controller logic
      */
-    // protected $session;
-
-    /**
-     * @return void
-     */
-    public function initController(\CodeIgniter\HTTP\RequestInterface $request, \CodeIgniter\HTTP\ResponseInterface $response, \Psr\Log\LoggerInterface $logger)
-    {
+    public function initController(
+        RequestInterface $request,
+        ResponseInterface $response,
+        LoggerInterface $logger
+    ) {
         parent::initController($request, $response, $logger);
 
-        // --- Solusi Pintar Base URL Dinamis ---
-        $this->baseUrl = rtrim((isset($_SERVER['HTTPS']) ? "https" : "http") . "://{$_SERVER['HTTP_HOST']}/", '/');
+        // --- SOLUSI BASE URL AMAN TANPA ERROR ---
+        $this->baseUrl = base_url();
+
+        // Helpers tambahan
         helper(['url', 'form', 'smart']);
     }
 }

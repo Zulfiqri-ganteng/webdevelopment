@@ -47,10 +47,17 @@
         font-weight: 700;
         margin-bottom: .35rem;
         text-align: center;
-        background: linear-gradient(45deg, #fff, #a8edea);
+
+        /* gradient text - vendor prefixed first, then standard */
         -webkit-background-clip: text;
+        background-clip: text;
+
         -webkit-text-fill-color: transparent;
+        color: transparent;
+
+        background: linear-gradient(45deg, #fff, #a8edea);
     }
+
 
     .scan-subtitle {
         text-align: center;
