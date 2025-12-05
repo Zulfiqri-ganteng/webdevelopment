@@ -23,10 +23,11 @@ $routes->get('activity/export', 'ActivityLogs::exportCsv', ['filter' => 'auth'])
 // ADMIN GROUP
 // =======================
 $routes->group('admin', ['filter' => ['auth', 'activityLogger']], static function ($routes) {
-    $routes->get('error-log', 'Admin\ErrorLogController::index');
-    $routes->get('error-log/(:num)', 'Admin\ErrorLogController::detail/$1');
     $routes->get('profil', 'Admin::profil');
     $routes->post('update-profil', 'Admin::updateProfil');
+    $routes->get('error-log', 'Admin\ErrorLogController::index');
+    $routes->get('error-log/fetch', 'Admin\ErrorLogController::fetch');
+    $routes->post('error-log/clear', 'Admin\ErrorLogController::clear');
 
     // Ganti Password Admin
     $routes->get('ganti-password', 'Admin::gantiPassword');
@@ -50,6 +51,23 @@ $routes->group('admin', ['filter' => ['auth', 'activityLogger']], static functio
     $routes->post('pengaturan/update-jadwal', 'Admin\JadwalController::updateJadwal');
     $routes->post('pengaturan/tambah-libur', 'Admin\JadwalController::addHariLibur');
     $routes->delete('pengaturan/hapus-libur/(:num)', 'Admin\JadwalController::deleteHariLibur/$1');
+
+    // =======================
+    // BACKUP DATABASE
+    // =======================
+    $routes->get('database-tools', 'Admin\DatabaseToolsController::index');
+    $routes->post('database-tools/backup', 'Admin\DatabaseToolsController::backup');
+    $routes->post('database-tools/restore-upload', 'Admin\DatabaseToolsController::uploadRestore');
+    $routes->post('database-tools/restore-run', 'Admin\DatabaseToolsController::runRestore');
+    $routes->get('database-tools/download/(:any)', 'Admin\DatabaseToolsController::download/$1');
+    $routes->post('database-tools/delete', 'Admin\DatabaseToolsController::delete');
+
+    // OPTIMASI FILE DATABASE
+    // OPTIMASI FILE DATABASE
+    $routes->get('optimize-storage', 'Admin\OptimizeStorageController::index');
+    $routes->get('optimize-storage/preview', 'Admin\OptimizeStorageController::preview');
+    $routes->post('optimize-storage/run', 'Admin\OptimizeStorageController::run');
+    $routes->get('optimize-storage/json-preview', 'Admin\OptimizeStorageController::jsonPreview');
 });
 
 // ==================== AUTH ====================

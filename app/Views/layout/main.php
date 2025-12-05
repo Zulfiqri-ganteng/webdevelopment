@@ -1025,55 +1025,79 @@ $isAbsensiActive = strpos($currentUri, 'absensi') !== false;
                     </ul>
                 </li>
 
-                <!-- ============================================
-               MANAJEMEN USER
-================================================= -->
-                <li>
-                    <a href="<?= smart_url('users') ?>"
-                        class="menu-link <?= $segment === 'users' ? 'active' : '' ?>"
-                        data-tooltip="Manajemen User">
-                        <i class="fa fa-user-shield"></i> <span>Manajemen User</span>
-                    </a>
-                </li>
 
-                <!-- ============================================
-             PENGATURAN JADWAL
-================================================= -->
-                <li>
-                    <a href="<?= smart_url('admin/pengaturan') ?>"
-                        class="menu-link <?= $segment === 'pengaturan' ? 'active' : '' ?>"
-                        data-tooltip="Pengaturan Jadwal">
-                        <i class="fa fa-cog"></i> <span>Pengaturan Jadwal</span>
-                    </a>
-                </li>
+                <!-- PENGATURAN (GROUP BARU) -->
+                <?php
+                $segment = service('uri')->getSegment(1);
+                $segment2 = service('uri')->getSegment(2);
 
-                <!-- ============================================
-                 LOG & DEBUG
-================================================= -->
+                // cek apakah salah satu submenu pengaturan sedang aktif
+                $isSettingsActive = in_array($segment, [
+                    'users',
+                    'backup',
+                    'optimize',
+                    'activity',
+                    'admin'
+                ]) && in_array($segment2, ['', 'error-log']);
+                ?>
+
                 <li>
                     <a href="#"
-                        class="dropdown-toggle <?= $isLogActive ? 'dropdown-open' : '' ?>"
-                        data-tooltip="Log & Debug">
-                        <i class="fa fa-bug"></i> <span>Log & Debug</span>
+                        class="dropdown-toggle <?= $isSettingsActive ? 'dropdown-open' : '' ?>"
+                        data-tooltip="Pengaturan Sistem">
+                        <i class="fa fa-cog"></i> <span>Pengaturan</span>
                         <span class="chevron">▾</span>
                     </a>
 
-                    <ul class="submenu <?= $isLogActive ? 'show' : '' ?>">
+                    <ul class="submenu <?= $isSettingsActive ? 'show' : '' ?>">
+
+                        <!-- USER MANAGEMENT -->
                         <li>
-                            <a href="<?= smart_url('activity') ?>"
-                                class="<?= $segment === 'activity' ? 'active' : '' ?>">
-                                Log Aktivitas
+                            <a href="<?= smart_url('users') ?>"
+                                class="<?= $segment === 'users' ? 'active' : '' ?>">
+                                <i class="fa fa-user-shield"></i> Manajemen User
                             </a>
                         </li>
 
+                        <!-- BACKUP DATABASE -->
+                        <li>
+                            <a href="<?= smart_url('admin/database-tools') ?>"
+                                class="<?= $segment === 'backup' ? 'active' : '' ?>">
+                                <i class="fa fa-database"></i> Backup Database
+                            </a>
+                        </li>
+
+                        <!-- OPTIMASI STORAGE -->
+                        <li>
+                            <a href="<?= smart_url('admin/optimize-storage') ?>"
+                                class="<?= $segment2 === 'optimize-storage' ? 'active' : '' ?>">
+                                <i class="fa fa-broom"></i> Optimasi Storage
+                            </a>
+                        </li>
+
+                        <!-- PREVIEW ORPHAN -->
+                    
+
+
+                        <!-- LOG AKTIVITAS -->
+                        <li>
+                            <a href="<?= smart_url('activity') ?>"
+                                class="<?= $segment === 'activity' ? 'active' : '' ?>">
+                                <i class="fa fa-list"></i> Log Aktivitas
+                            </a>
+                        </li>
+
+                        <!-- LOG ERROR -->
                         <li>
                             <a href="<?= smart_url('admin/error-log') ?>"
                                 class="<?= $segment2 === 'error-log' ? 'active' : '' ?>">
-                                Log Error
+                                <i class="fa fa-exclamation-triangle"></i> Log Error
                             </a>
                         </li>
+
                     </ul>
                 </li>
+
 
             <?php endif; ?>
 

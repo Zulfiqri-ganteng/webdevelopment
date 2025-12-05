@@ -1,0 +1,1 @@
+__ci_last_regenerate|i:1764949891;_ci_previous_url|s:42:"http://localhost:8080/admin/database-tools";id|s:2:"15";user_id|s:2:"15";username|s:10:"superadmin";role|s:5:"admin";siswa_id|N;nama|s:10:"Superadmin";kelas|N;jurusan|N;foto|s:11:"default.png";isLoggedIn|b:1;error|s:58:"Backup gagal: Class "CodeIgniter\Database\Utils" not found";__ci_vars|a:1:{s:5:"error";s:3:"old";}
