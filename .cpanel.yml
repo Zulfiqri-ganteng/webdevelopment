@@ -1,0 +1,6 @@
+---
+deployment:
+  tasks:
+    - export DEPLOYPATH=/home/zulh7811/public_html
+    - /bin/rsync -av --exclude '.git' --exclude 'writable/' ./ $DEPLOYPATH
+    - /bin/rsync -av ./writable/ $DEPLOYPATH/writable
