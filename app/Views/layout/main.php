@@ -1025,20 +1025,30 @@ $isAbsensiActive = strpos($currentUri, 'absensi') !== false;
                     </ul>
                 </li>
 
-
                 <!-- PENGATURAN (GROUP BARU) -->
                 <?php
-                $segment = service('uri')->getSegment(1);
-                $segment2 = service('uri')->getSegment(2);
+                $uri       = service('uri');
+                $segments  = $uri->getSegments();
 
-                // cek apakah salah satu submenu pengaturan sedang aktif
-                $isSettingsActive = in_array($segment, [
+                // Ambil segmen aman
+                $segment   = $segments[0] ?? '';
+                $segment2  = $segments[1] ?? '';
+                $segment3  = $segments[2] ?? '';
+
+                // Deteksi apakah grup "Pengaturan" sedang dibuka
+                $settingsGroup = [
                     'users',
-                    'backup',
-                    'optimize',
+                    'admin',
                     'activity',
-                    'admin'
-                ]) && in_array($segment2, ['', 'error-log']);
+                    'optimize-storage',
+                    'database-tools',
+                    'error-log'
+                ];
+
+                // Menu pengaturan aktif jika segmen-1 atau segmen-2 adalah salah satu dari di atas
+                $isSettingsActive =
+                    in_array($segment, $settingsGroup)
+                    || in_array($segment2, $settingsGroup);
                 ?>
 
                 <li>
@@ -1062,7 +1072,7 @@ $isAbsensiActive = strpos($currentUri, 'absensi') !== false;
                         <!-- BACKUP DATABASE -->
                         <li>
                             <a href="<?= smart_url('admin/database-tools') ?>"
-                                class="<?= $segment === 'backup' ? 'active' : '' ?>">
+                                class="<?= $segment2 === 'database-tools' ? 'active' : '' ?>">
                                 <i class="fa fa-database"></i> Backup Database
                             </a>
                         </li>
@@ -1070,14 +1080,10 @@ $isAbsensiActive = strpos($currentUri, 'absensi') !== false;
                         <!-- OPTIMASI STORAGE -->
                         <li>
                             <a href="<?= smart_url('admin/optimize-storage') ?>"
-                                class="<?= $segment2 === 'optimize-storage' ? 'active' : '' ?>">
+                                class="<?= strpos($uri->getPath(), 'optimize-storage') !== false ? 'active' : '' ?>">
                                 <i class="fa fa-broom"></i> Optimasi Storage
                             </a>
                         </li>
-
-                        <!-- PREVIEW ORPHAN -->
-                    
-
 
                         <!-- LOG AKTIVITAS -->
                         <li>
@@ -1090,13 +1096,14 @@ $isAbsensiActive = strpos($currentUri, 'absensi') !== false;
                         <!-- LOG ERROR -->
                         <li>
                             <a href="<?= smart_url('admin/error-log') ?>"
-                                class="<?= $segment2 === 'error-log' ? 'active' : '' ?>">
+                                class="<?= strpos($uri->getPath(), 'error-log') !== false ? 'active' : '' ?>">
                                 <i class="fa fa-exclamation-triangle"></i> Log Error
                             </a>
                         </li>
 
                     </ul>
                 </li>
+
 
 
             <?php endif; ?>
