@@ -2,15 +2,11 @@
 deployment:
   tasks:
     - DEPLOYPATH=/home/zulh7811/public_html/
-
     - /bin/cp -R public/* $DEPLOYPATH
-
     - /bin/cp -R app $DEPLOYPATH
     - /bin/cp -R writable $DEPLOYPATH
     - /bin/cp -R vendor $DEPLOYPATH
-
     - /bin/cp composer.json $DEPLOYPATH
     - /bin/cp composer.lock $DEPLOYPATH
     - /bin/cp spark $DEPLOYPATH
-
     - /bin/cp deploy_index.php $DEPLOYPATH/index.php
